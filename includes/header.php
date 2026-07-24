@@ -20,6 +20,8 @@ $user = current_user();
         <nav>
             <a href="<?= BASE_URL ?>/dashboard.php">Dashboard</a>
 
+            <a href="<?= BASE_URL ?>/tools/">Tools</a>
+
             <?php if (($user['role_name'] ?? '') === 'Administrator'): ?>
                 <a href="<?= BASE_URL ?>/admin/users.php">Users</a>
             <?php endif; ?>
