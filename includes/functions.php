@@ -127,3 +127,22 @@ function login_rate_limited(string $username): bool
 
     return (int)$stmt->fetchColumn() >= 5;
 }
+
+function auto_copyright($year = 'auto'){
+		if(INTVAL($year) == 'auto')
+		{
+			$year = DATE('Y'); 
+		} 
+		if(INTVAL($year) == DATE('Y'))
+		{ 
+			ECHO INTVAL($year); 
+		} 
+		if(INTVAL($year) < DATE('Y'))
+		{ 
+			ECHO INTVAL($year) . ' - ' . DATE('Y'); 
+		} 
+		if(INTVAL($year) > DATE('Y'))
+		{ 
+			ECHO DATE('Y'); 
+		} 
+	} 
