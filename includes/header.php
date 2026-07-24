@@ -35,6 +35,8 @@ $user = current_user();
             <a href="<?= BASE_URL ?>/maintenance/history.php">Maintenance History</a>
             <a href="<?= BASE_URL ?>/reports/index.php">Reports</a>
             <a href="<?= BASE_URL ?>/reports/tool_history.php">Tool History</a>
+            <a href="<?= BASE_URL ?>/locations/index.php">Locations</a>
+            <a href="<?= BASE_URL ?>/transfers/index.php">Transfers</a>
             
 
             <?php if (($user['role_name'] ?? '') === 'Administrator'): ?>
@@ -42,6 +44,9 @@ $user = current_user();
                 <a href="<?= BASE_URL ?>/admin/api_tokens.php">API Tokens</a>
                 <a href="<?= BASE_URL ?>/admin/api_logs.php">API Logs</a>
                 <a href="<?= BASE_URL ?>/notifications/index.php">Notifications</a>
+                <a href="<?= BASE_URL ?>/reports/location_inventory.php">Location Inventory</a>
+                <a href="<?= BASE_URL ?>/reports/transfer_history.php">Transfer History</a>
+                <a href="<?= BASE_URL ?>/reports/custody_history.php">Chain of Custody</a>
             <?php endif; ?>
 
             <a href="<?= BASE_URL ?>/logout.php">Logout</a>
