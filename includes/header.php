@@ -23,6 +23,8 @@ $user = current_user();
             <a href="<?= BASE_URL ?>/tools/">Tools</a>
 
             <a href="<?= BASE_URL ?>/employees/index.php">Employees</a>
+            <a href="<?= BASE_URL ?>/checkout/index.php">Checkout</a>
+            <a href="<?= BASE_URL ?>/checkout/history.php">History</a>
 
             <?php if (($user['role_name'] ?? '') === 'Administrator'): ?>
                 <a href="<?= BASE_URL ?>/admin/users.php">Users</a>
