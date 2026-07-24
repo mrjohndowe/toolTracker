@@ -25,7 +25,7 @@ $user = current_user();
     <?php if ($user !== null): ?>
         <nav>
             <a href="<?= BASE_URL ?>/dashboard.php">Dashboard</a>
-
+            <a href="<?= BASE_URL ?>/mobile/index.php">Mobile</a>
             <a href="<?= BASE_URL ?>/tools/">Tools</a>
 
             <a href="<?= BASE_URL ?>/employees/index.php">Employees</a>
@@ -35,10 +35,13 @@ $user = current_user();
             <a href="<?= BASE_URL ?>/maintenance/history.php">Maintenance History</a>
             <a href="<?= BASE_URL ?>/reports/index.php">Reports</a>
             <a href="<?= BASE_URL ?>/reports/tool_history.php">Tool History</a>
-            <a href="<?= BASE_URL ?>/mobile/index.php">Mobile</a>
+            
 
             <?php if (($user['role_name'] ?? '') === 'Administrator'): ?>
-                <a href="<?= BASE_URL ?>/admin/users.php">Users</a>
+                <a href="<?= BASE_URL ?>/admin/users.php">Users</a>     
+                <a href="<?= BASE_URL ?>/admin/api_tokens.php">API Tokens</a>
+                <a href="<?= BASE_URL ?>/admin/api_logs.php">API Logs</a>
+                <a href="<?= BASE_URL ?>/notifications/index.php">Notifications</a>
             <?php endif; ?>
 
             <a href="<?= BASE_URL ?>/logout.php">Logout</a>
