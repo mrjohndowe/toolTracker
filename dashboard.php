@@ -62,11 +62,10 @@ require __DIR__ . '/includes/header.php';
 </div>
 
 <div class="card">
-    <h2>Foundation Installed</h2>
-    <p>
-        This release includes authentication, roles, user administration,
-        session security, CSRF protection, login throttling, and audit logging.
-    </p>
+    <h2>MOSS Highland Tool Connex</h2>
+    <p>Welcome to the MOSS Highland Tool Connex system. This dashboard provides an overview of the system's activity and statistics.</p>
+    <p>Use the navigation links above to access different sections of the system, including tools, employees, checkouts, maintenance, and reports. Administrators have access to additional management features.</p>
+    <p>For any questions or assistance, please contact the system administrator.</p>
 </div>
 
 <div class="card">
