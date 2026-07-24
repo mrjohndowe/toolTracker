@@ -11,8 +11,14 @@ $user = current_user();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($pageTitle ?? APP_NAME) ?> - <?= e(APP_NAME) ?></title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/app.css">
+    <link rel="manifest" href="<?= BASE_URL ?>/manifest.webmanifest">
+    <meta name="theme-color" content="#1f2937">
 </head>
 <body>
+<script>
+    window.TOOLTRACK_BASE_URL = <?= json_encode(BASE_URL) ?>;
+</script>
+<script src="<?= BASE_URL ?>/assets/js/pwa-register.js"></script>
 <header class="topbar">
     <div class="brand"><?= e(APP_NAME) ?></div>
 
@@ -29,6 +35,7 @@ $user = current_user();
             <a href="<?= BASE_URL ?>/maintenance/history.php">Maintenance History</a>
             <a href="<?= BASE_URL ?>/reports/index.php">Reports</a>
             <a href="<?= BASE_URL ?>/reports/tool_history.php">Tool History</a>
+            <a href="<?= BASE_URL ?>/mobile/index.php">Mobile</a>
 
             <?php if (($user['role_name'] ?? '') === 'Administrator'): ?>
                 <a href="<?= BASE_URL ?>/admin/users.php">Users</a>
