@@ -1,0 +1,1 @@
+<?php echo 'Edit tool page placeholder';

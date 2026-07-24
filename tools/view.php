@@ -1,0 +1,1 @@
+<?php echo 'View tool page placeholder';

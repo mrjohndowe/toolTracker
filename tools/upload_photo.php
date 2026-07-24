@@ -1,0 +1,1 @@
+<?php echo 'Photo upload placeholder';
