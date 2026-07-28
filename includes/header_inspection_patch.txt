@@ -1,0 +1,3 @@
+Add menu links:
+<a href="<?= BASE_URL ?>/inspections/history.php">Inspection History</a>
+<a href="<?= BASE_URL ?>/admin/inspection_questions.php">Inspection Questions</a>

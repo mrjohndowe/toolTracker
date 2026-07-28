@@ -187,7 +187,7 @@ document.getElementById('completeCheckout').addEventListener('click', async () =
             notes: document.getElementById('checkoutNotes').value
         });
 
-        window.location.href = '<?= BASE_URL ?>/checkout/view.php?id=' + data.transaction_id;
+        window.location.href = data.inspection_url;
     } catch (error) {
         alert(error.message);
     }

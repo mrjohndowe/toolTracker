@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/_common.php';
+require_once __DIR__ . '/../inspections/_common.php';
 require_login();
 
 $csrf = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
@@ -87,6 +88,7 @@ if ($action === 'complete') {
         ]);
 
         $transactionId = (int)$pdo->lastInsertId();
+        $inspectionItems = [];
 
         $selectTool = $pdo->prepare(
             'SELECT id, barcode, name, status, tool_condition
@@ -121,6 +123,8 @@ if ($action === 'complete') {
 
             $updateTool->execute([$toolId]);
             $insertItem->execute([$transactionId, $toolId, $tool['tool_condition']]);
+            $checkoutItemId = (int)$pdo->lastInsertId();
+            $inspectionItems[] = ['type'=>'Checkout','tool_id'=>$toolId,'transaction_id'=>$transactionId,'checkout_item_id'=>$checkoutItemId,'employee_id'=>$employeeId];
             $insertHistory->execute([
                 $toolId,
                 $tool['tool_condition'],
@@ -137,6 +141,7 @@ if ($action === 'complete') {
             'success' => true,
             'transaction_id' => $transactionId,
             'transaction_number' => $transactionNumber,
+            'inspection_url' => inspection_create_queue('Checkout', $inspectionItems, BASE_URL . '/checkout/view.php?id=' . $transactionId),
         ]);
     } catch (Throwable $e) {
         if ($pdo->inTransaction()) {

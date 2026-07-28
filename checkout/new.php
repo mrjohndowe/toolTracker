@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/_common.php';
+require_once __DIR__ . '/../inspections/_common.php';
 require_login();
 
 if (isset($_GET['reset'])) {
@@ -95,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ]);
 
             $transactionId = (int)$pdo->lastInsertId();
+            $inspectionItems = [];
 
             $insertItem = $pdo->prepare(
                 'INSERT INTO checkout_items
@@ -122,6 +124,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     (int)$tool['id'],
                     $tool['tool_condition'],
                 ]);
+                $checkoutItemId = (int)$pdo->lastInsertId();
+                $inspectionItems[] = [
+                    'type' => 'Checkout',
+                    'tool_id' => (int)$tool['id'],
+                    'transaction_id' => $transactionId,
+                    'checkout_item_id' => $checkoutItemId,
+                    'employee_id' => (int)$employee['id'],
+                ];
 
                 $history->execute([
                     (int)$tool['id'],
@@ -146,8 +156,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             audit_log('checkout_completed', null, $number);
             clear_checkout_cart();
 
-            flash('success', 'Checkout completed: ' . $number);
-            redirect('/checkout/view.php?id=' . $transactionId);
+            $inspectionUrl = inspection_create_queue('Checkout', $inspectionItems, BASE_URL . '/checkout/view.php?id=' . $transactionId);
+            flash('success', 'Checkout created. Complete the required inspections.');
+            redirect($inspectionUrl);
         } catch (Throwable $e) {
             if ($pdo->inTransaction()) {
                 $pdo->rollBack();
