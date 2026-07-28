@@ -2,6 +2,13 @@
 declare(strict_types=1);
 require_once __DIR__ . '/../includes/functions.php';
 
+function inspection_url(string $path = ''): string {
+    $base = defined('BASE_URL') ? rtrim((string) BASE_URL, '/') : '';
+    $path = '/' . ltrim($path, '/');
+    return $base . $path;
+}
+
+
 function inspection_template_for(string $type): ?array {
     $stmt=db()->prepare('SELECT * FROM inspection_templates WHERE active=1 AND inspection_type IN (?,"Both") ORDER BY inspection_type=? DESC,id LIMIT 1');
     $stmt->execute([$type,$type]); $r=$stmt->fetch(); return is_array($r)?$r:null;
@@ -13,7 +20,7 @@ function inspection_questions(int $templateId): array {
 function inspection_create_queue(string $type,array $items,string $returnUrl): string {
     $key=bin2hex(random_bytes(16));
     $_SESSION['inspection_queues'][$key]=['type'=>$type,'items'=>array_values($items),'index'=>0,'return_url'=>$returnUrl,'created_at'=>time()];
-    return BASE_URL.'/inspections/queue.php?queue='.rawurlencode($key);
+    return inspection_url('/inspections/queue.php?queue=' . rawurlencode($key));
 }
 function inspection_answer_value(array $q,$value): array {
     $text=$bool=$num=null;

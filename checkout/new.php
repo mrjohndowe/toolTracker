@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             audit_log('checkout_completed', null, $number);
             clear_checkout_cart();
 
-            $inspectionUrl = inspection_create_queue('Checkout', $inspectionItems, BASE_URL . '/checkout/view.php?id=' . $transactionId);
+            $inspectionUrl = inspection_create_queue('Checkout', $inspectionItems, inspection_url('/checkout/new.php?completed=' . $transactionId));
             flash('success', 'Checkout created. Complete the required inspections.');
             redirect($inspectionUrl);
         } catch (Throwable $e) {

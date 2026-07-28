@@ -141,7 +141,7 @@ if ($action === 'complete') {
             'success' => true,
             'transaction_id' => $transactionId,
             'transaction_number' => $transactionNumber,
-            'inspection_url' => inspection_create_queue('Checkout', $inspectionItems, BASE_URL . '/checkout/view.php?id=' . $transactionId),
+            'inspection_url' => inspection_create_queue('Checkout', $inspectionItems, inspection_url('/checkout/new.php?completed=' . $transactionId)),
         ]);
     } catch (Throwable $e) {
         if ($pdo->inTransaction()) {

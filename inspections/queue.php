@@ -4,7 +4,7 @@ require_once __DIR__ . '/_common.php';
 require_login();
 $key=(string)($_GET['queue']??$_POST['queue']??'');
 $q=$_SESSION['inspection_queues'][$key]??null;
-if(!is_array($q)){flash('danger','Inspection queue expired or was not found.');redirect('/');}
+if(!is_array($q)){flash('danger','Inspection queue expired or was not found.');redirect(inspection_url('/'));}
 $index=(int)$q['index']; $item=$q['items'][$index]??null;
 if(!is_array($item)){ $url=(string)$q['return_url']; unset($_SESSION['inspection_queues'][$key]); flash('success','All required inspections are complete.'); redirect($url); }
 $template=inspection_template_for((string)$item['type']); if(!$template) exit('No inspection template configured.');
@@ -12,7 +12,7 @@ $questions=inspection_questions((int)$template['id']);
 $s=db()->prepare('SELECT id,name,internal_id,tool_condition FROM tools WHERE id=?');$s->execute([(int)$item['tool_id']]);$tool=$s->fetch();if(!is_array($tool))exit('Tool not found.');
 if($_SERVER['REQUEST_METHOD']==='POST'){
  verify_csrf();
- try{ $pdo=db();$pdo->beginTransaction();$u=current_user();save_inspection($item,is_array($_POST['answers']??null)?$_POST['answers']:[],$u['id']??null,trim((string)($_POST['notes']??''))?:null);$pdo->commit();$_SESSION['inspection_queues'][$key]['index']=$index+1;redirect('/inspections/queue.php?queue='.rawurlencode($key)); }
+ try{ $pdo=db();$pdo->beginTransaction();$u=current_user();save_inspection($item,is_array($_POST['answers']??null)?$_POST['answers']:[],$u['id']??null,trim((string)($_POST['notes']??''))?:null);$pdo->commit();$_SESSION['inspection_queues'][$key]['index']=$index+1;redirect(inspection_url('/inspections/queue.php?queue=' . rawurlencode($key))); }
  catch(Throwable $e){if(db()->inTransaction())db()->rollBack();flash('danger',$e->getMessage());}
 }
 $pageTitle=$item['type'].' Inspection'; require __DIR__.'/../includes/header.php';
