@@ -25,6 +25,12 @@ $isSuperAdministrator = $roleName === 'Super Administrator';
 
 <header class="topbar">
     <div class="topbar-row">
+        <div class="header-logo">
+                <a href="<?= BASE_URL ?>/">
+                    <img src="<?= BASE_URL ?>/assets/images/logo.png"
+                        alt="Company Logo">
+                </a>
+            </div><hr>
         <a class="brand" href="<?= rtrim(BASE_URL, '/') ?>/dashboard.php"><?= e(APP_NAME) ?></a>
 
         <?php if ($user !== null): ?>
@@ -47,8 +53,9 @@ $isSuperAdministrator = $roleName === 'Super Administrator';
                 <div class="nav-dropdown-menu">
                     <a href="<?= rtrim(BASE_URL, '/') ?>/tools/">Tools</a>
                     <a href="<?= rtrim(BASE_URL, '/') ?>/employees/index.php">Employees</a>
+                    <a href="<?= rtrim(BASE_URL, '/') ?>/locations/index.php">Locations</a>
                     <?php if ($isSuperAdministrator): ?>
-                        <a href="<?= rtrim(BASE_URL, '/') ?>/locations/index.php">Locations</a>
+                        
                         <a href="<?= rtrim(BASE_URL, '/') ?>/reports/location_inventory.php">Location Inventory</a>
                     <?php endif; ?>
                 </div>
@@ -120,6 +127,7 @@ $isSuperAdministrator = $roleName === 'Super Administrator';
             <?php endif; ?>
 
             <a class="logout-link" href="<?= rtrim(BASE_URL, '/') ?>/logout.php">Logout</a>
+            
         </nav>
     <?php endif; ?>
 </header>

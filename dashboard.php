@@ -10,7 +10,8 @@ $stats = [
         "SELECT COUNT(*)
          FROM users u
          INNER JOIN roles r ON r.id = u.role_id
-         WHERE r.name = 'Administrator' AND u.active = 1"
+         WHERE (r.name = 'Administrator' AND u.active = 1)
+            OR (r.name = 'Super Administrator' AND u.active = 1)"
     )->fetchColumn(),
     'logins_today' => (int)db()->query(
         "SELECT COUNT(*)

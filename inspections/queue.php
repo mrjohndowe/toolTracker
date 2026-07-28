@@ -22,7 +22,7 @@ if (!is_array($item)) {
     redirect($returnPath);
 }
 
-$template = inspection_template_for((string)$item['type']);
+$template = inspection_template_for_tool((string)$item['type'], (int)$item['tool_id']);
 if ($template === null) {
     http_response_code(500);
     exit('No inspection template configured.');
@@ -30,8 +30,11 @@ if ($template === null) {
 
 $questions = inspection_questions((int)$template['id']);
 $stmt = db()->prepare(
-    'SELECT id, name, internal_id, tool_condition
-     FROM tools WHERE id = ?'
+    'SELECT t.id, t.name, t.internal_id, t.tool_condition, t.category_id,
+            tc.name AS category_name
+     FROM tools t
+     LEFT JOIN tool_categories tc ON tc.id = t.category_id
+     WHERE t.id = ?'
 );
 $stmt->execute([(int)$item['tool_id']]);
 $tool = $stmt->fetch();
@@ -76,6 +79,8 @@ require __DIR__ . '/../includes/header.php';
     <h2><?= e((string)$tool['name']) ?></h2>
     <p>
         <strong>ID:</strong> <?= e((string)$tool['internal_id']) ?> |
+        <strong>Category:</strong> <?= e((string)($tool['category_name'] ?? 'Uncategorized')) ?> |
+        <strong>Question set:</strong> <?= e((string)$template['name']) ?> |
         <strong>Questionnaire:</strong> <?= $index + 1 ?> of <?= count($queue['items']) ?>
     </p>
 </div>

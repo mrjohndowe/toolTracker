@@ -56,3 +56,35 @@ input,select{width:100%;padding:11px;border:1px solid #cfd4dc;border-radius:6px;
   .nav-dropdown-menu a:hover,.nav-dropdown-menu a:focus{background:rgba(255,255,255,.12);color:#fff}
   .logout-link{margin-left:0}
 }
+/* ---------- Header ---------- */
+
+.navbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+/* Menu stays on the left */
+
+.nav-menu{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex:1;
+}
+
+/* Logo */
+
+.header-logo{
+    margin-left:auto;
+    display:flex;
+    align-items:center;
+    
+}
+
+.header-logo img{
+    height:100px;
+    width:auto;
+    display:block;
+}

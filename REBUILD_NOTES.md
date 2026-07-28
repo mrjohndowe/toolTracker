@@ -26,3 +26,16 @@ Import:
 This closes older transactions whose items were already returned and normalizes
 older `Inspection` or `Repair` return labels to `Returned` while preserving each
 current tool status.
+
+## Category-Based Inspection Questions
+
+Inspection templates can now be assigned to a tool category and independently
+configured for Checkout, Checkin, or Both. Selection priority is:
+
+1. Matching category + exact inspection type
+2. Matching category + Both
+3. Default template + exact inspection type
+4. Default template + Both
+
+Manage sets at `/admin/inspection_questions.php`.
+Import `database/category_inspection_questions.sql` once before using the feature.

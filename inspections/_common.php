@@ -19,20 +19,39 @@ function inspection_public_url(string $path = ''): string
     return rtrim(BASE_URL, '/') . inspection_path($path);
 }
 
-function inspection_template_for(string $type): ?array
+function inspection_template_for(string $type, ?int $categoryId = null): ?array
 {
+    // Prefer a category-specific template, then fall back to a global template.
+    // Within each level, an exact Checkout/Checkin template outranks Both.
     $stmt = db()->prepare(
-        'SELECT *
-         FROM inspection_templates
-         WHERE active = 1
-           AND inspection_type IN (?, "Both")
-         ORDER BY inspection_type = ? DESC, id
+        'SELECT it.*, tc.name AS category_name
+         FROM inspection_templates it
+         LEFT JOIN tool_categories tc ON tc.id = it.category_id
+         WHERE it.active = 1
+           AND it.inspection_type IN (?, "Both")
+           AND (it.category_id = ? OR it.category_id IS NULL)
+         ORDER BY
+           (it.category_id = ?) DESC,
+           (it.inspection_type = ?) DESC,
+           it.id ASC
          LIMIT 1'
     );
-    $stmt->execute([$type, $type]);
+    $stmt->execute([$type, $categoryId, $categoryId, $type]);
     $template = $stmt->fetch();
 
     return is_array($template) ? $template : null;
+}
+
+function inspection_template_for_tool(string $type, int $toolId): ?array
+{
+    $stmt = db()->prepare('SELECT category_id FROM tools WHERE id = ? LIMIT 1');
+    $stmt->execute([$toolId]);
+    $categoryId = $stmt->fetchColumn();
+
+    return inspection_template_for(
+        $type,
+        $categoryId !== false && $categoryId !== null ? (int)$categoryId : null
+    );
 }
 
 function inspection_questions(int $templateId): array
@@ -83,7 +102,7 @@ function inspection_answer_value(array $question, mixed $value): array
 function save_inspection(array $item, array $answers, ?int $userId, ?string $notes): int
 {
     $type = (string)$item['type'];
-    $template = inspection_template_for($type);
+    $template = inspection_template_for_tool($type, (int)$item['tool_id']);
 
     if ($template === null) {
         throw new RuntimeException('No active inspection template is configured.');
