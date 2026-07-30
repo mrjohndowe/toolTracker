@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-const APP_NAME = 'ToolTrack Pro';
-const APP_VERSION = '1.0.0';
+const APP_NAME = 'Moss Tool Connext Checkout System';
+const APP_VERSION = '1.2.1';
 const BASE_URL = '/toolTracker';
 const SESSION_TIMEOUT = 3600;
 const DEVELEPER_NAME = "MrJohnDowe";

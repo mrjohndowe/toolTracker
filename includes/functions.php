@@ -129,20 +129,20 @@ function login_rate_limited(string $username): bool
 }
 
 function auto_copyright($year = 'auto'){
-		if(INTVAL($year) == 'auto')
-		{
-			$year = DATE('Y'); 
-		} 
-		if(INTVAL($year) == DATE('Y'))
-		{ 
-			ECHO INTVAL($year); 
-		} 
-		if(INTVAL($year) < DATE('Y'))
-		{ 
-			ECHO INTVAL($year) . ' - ' . DATE('Y'); 
-		} 
-		if(INTVAL($year) > DATE('Y'))
-		{ 
-			ECHO DATE('Y'); 
-		} 
-	} 
+    if(INTVAL($year) == 'auto')
+    {
+        $year = DATE('Y'); 
+    } 
+    if(INTVAL($year) == DATE('Y'))
+    { 
+        ECHO INTVAL($year); 
+    } 
+    if(INTVAL($year) < DATE('Y'))
+    { 
+        ECHO INTVAL($year) . ' - ' . DATE('Y'); 
+    } 
+    if(INTVAL($year) > DATE('Y'))
+    { 
+        ECHO DATE('Y'); 
+    } 
+} 
